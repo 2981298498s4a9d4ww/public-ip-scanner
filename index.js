@@ -25,7 +25,7 @@ app.post("/scan", (req, res) => {
 
   const portList = ports || "21,22,80,443,8080";
 
-  const command = `nmap -Pn -T4 -p ${portList} --open ${targets.join(" ")}`;
+  const command = `nmap -sT -Pn -T4 -p ${portList} --open ${targets.join(" ")}`;
 
   exec(command, { timeout: 10000 }, (error, stdout, stderr) => {
     if (error) {
