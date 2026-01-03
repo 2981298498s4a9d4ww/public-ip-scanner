@@ -1,7 +1,10 @@
 const express = require("express");
+const cors = require("cors");              // ← ADD THIS
 const { exec } = require("child_process");
 
 const app = express();
+
+app.use(cors());                            // ← ADD THIS (VERY IMPORTANT)
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -22,7 +25,6 @@ app.post("/scan", (req, res) => {
 
   const portList = ports || "21,22,80,443,8080";
 
-  // Build safe command
   const command = `nmap -Pn -T4 -p ${portList} --open ${targets.join(" ")}`;
 
   exec(command, { timeout: 10000 }, (error, stdout, stderr) => {
